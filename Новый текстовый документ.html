@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DragonEvo</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Press Start 2P', cursive;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(180deg, #2a003e 0%, #000000 100%);
+        color: #fff;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        background: rgba(0,0,0,0.7);
+        position: fixed;
+        top:0; left:0; right:0;
+        z-index:1000;
+        border-bottom:1px solid #444;
+    }
+
+    .navbar-brand, .nav-link {
+        font-size:0.8rem;
+        color:#fff !important;
+        text-transform:uppercase;
+    }
+
+    .nav-link:hover {
+        color:#ff6ec4 !important;
+    }
+
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 70vh;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), 
+            url("BACKGROUND_IMAGE_URL_HERE") center/cover no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .hero h1, .hero h2 {
+        background: linear-gradient(90deg, #ff6ec4, #7873f5);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        text-transform: uppercase;
+        transition: transform 0.3s;
+    }
+
+    .hero h1:hover {
+        transform: scale(1.02);
+    }
+
+    .hero h2 {
+        font-size:1.2rem;
+        margin-bottom:30px;
+    }
+
+    .btn-play {
+        font-size:0.9rem;
+        padding:10px 20px;
+        background: linear-gradient(45deg, #ff6ec4, #7873f5);
+        border:none;
+        border-radius:5px;
+        color:#fff;
+        text-decoration:none;
+        box-shadow:0 0 20px rgba(135,73,255,0.7);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-play:hover {
+        transform: scale(1.05);
+        box-shadow:0 0 20px rgba(255,255,255,0.9);
+    }
+
+    .section {
+        padding: 60px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .section h1 {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        background: linear-gradient(90deg, #ff6ec4, #7873f5);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        text-transform: uppercase;
+        transition: transform 0.3s;
+    }
+
+    .section h1:hover {
+        transform: scale(1.02);
+    }
+
+    .section p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        max-width: 800px;
+        margin: 0 auto 30px auto;
+        color:#ccc;
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate-up {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    a {
+        color:#ff6ec4;
+        text-decoration:none;
+        transition:color 0.3s;
+    }
+
+    a:hover {
+        color:#ff99dc;
+    }
+
+    .card-dark {
+        background: #1a1a1a;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        margin-bottom: 30px;
+        padding: 20px;
+        text-align: left;
+        position: relative;
+        overflow:hidden;
+        transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+        border: 1px solid #1a1a1a;
+    }
+
+    .card-dark h3 {
+        font-size:1rem;
+        margin-bottom:10px;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #ff6ec4, #7873f5);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .card-dark p {
+        font-size:0.8rem;
+        line-height:1.4;
+        color:#ccc;
+    }
+
+    .card-dark:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow:0 0 15px rgba(255,255,255,0.2);
+        border:1px solid #ff6ec4;
+    }
+
+    /* Состав */
+    .team-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .team-card {
+        width: 160px;
+        background: #1a1a1a;
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+        cursor: pointer;
+        position: relative;
+        border:1px solid #1a1a1a;
+    }
+
+    .team-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        border:1px solid #ff6ec4;
+    }
+
+    .team-card h5 {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+    }
+
+    .team-card p {
+        font-size: 0.7rem;
+        color:#ccc;
+        margin:0;
+    }
+
+    /* Красный градиент для тех. админов */
+    .tech-admin {
+        background: linear-gradient(90deg, #ff7a7a, #ff9f9f);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Синий градиент для дизайнера */
+    .designer {
+        background: linear-gradient(90deg, #6eaaff, #4f7aff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .popover {
+        --bs-popover-bg: #1a1a1a;
+        --bs-popover-color: #fff;
+        --bs-popover-border-color: #444;
+        border: 1px solid #444;
+    }
+
+    .popover-body {
+        font-size:0.8rem;
+        color:#ccc;
+    }
+
+    .popover-header {
+        font-size:0.9rem;
+        text-transform:uppercase;
+        color:#ff6ec4;
+        border-bottom:1px solid #444;
+        background:#1a1a1a;
+    }
+
+    footer {
+        text-align:center;
+        padding:20px;
+        font-size:0.8rem;
+        color:#ccc;
+        border-top:1px solid #444;
+        margin-top:40px;
+    }
+
+</style>
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">DragonEvo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="#storyline">Сюжет</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">О сервере</a></li>
+                <li class="nav-item"><a class="nav-link" href="#quests">Квесты</a></li>
+                <li class="nav-item"><a class="nav-link" href="#mobs">Мобы</a></li>
+                <li class="nav-item"><a class="nav-link" href="#team">Состав</a></li>
+                <li class="nav-item">
+                    <a href="https://mcskill.net/start" target="_blank" class="btn-play" style="font-size:0.7rem; text-transform:none; box-shadow:none; background: #ff6ec4;">
+                        Скачать лаунчер
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+    <h2 class="animate-on-scroll">Добро пожаловать в</h2>
+    <h1 class="animate-on-scroll">DragonEvo</h1>
+    <a href="https://mcskill.net/start" class="btn-play animate-on-scroll" target="_blank">Начать игру</a>
+</div>
+
+<!-- Сюжет -->
+<div class="section animate-on-scroll" id="storyline">
+    <h1>Сюжет</h1>
+
+    <div class="card-dark">
+        <h3>Начало пути</h3>
+        <p>Игрок оказывается в мире, где небеса принадлежат драконам. Он начинает преобразовывать среду с помощью механизмов и энергии.</p>
+    </div>
+    <div class="card-dark">
+        <h3>Годы спустя</h3>
+        <p>Став изобретателем, Игрок создает продвинутые хранилища и механизмы, но для прогресса нужны новые источники и магия.</p>
+    </div>
+    <div class="card-dark">
+        <h3>Тёмная магия и драконы</h3>
+        <p>Освоив тёмную магию, Игрок приручает драконов, улучшает механизмы и выводит минералоносные семена.</p>
+    </div>
+    <div class="card-dark">
+        <h3>Чистая маргаритка</h3>
+        <p>Скрещивая ресурсы, Игрок создаёт Чистую маргаритку, которая придаёт предметам магические формы, вдохновляя на новые гибриды.</p>
+    </div>
+    <div class="card-dark">
+        <h3>Мана и новые горизонты</h3>
+        <p>Выведя растения с маной, Игрок строит бассейны и алтарь. Теперь магия и технологии объединены, открывая безграничные возможности.</p>
+    </div>
+</div>
+
+<!-- О сервере -->
+<div class="section animate-on-scroll" id="about">
+    <h1>О сервере</h1>
+    <p>DragonEvo — фэнтезийный RPG-сервер Minecraft, где магия и технологии идут рука об руку. Исследуйте мир, приручайте драконов, создавайте механизмы и расширяйте ваш потенциал!</p>
+</div>
+
+<!-- Квесты -->
+<div class="section animate-on-scroll" id="quests">
+    <h1>Квесты</h1>
+    <p>Помогайте NPC, выполняйте задания, находите редкие ресурсы — каждый квест приближает к новым вершинам развития!</p>
+</div>
+
+<!-- Мобы -->
+<div class="section animate-on-scroll" id="mobs">
+    <h1>Мобы</h1>
+    <p>Мир DragonEvo населен разнообразными существами. Изучайте их, применяйте их дроп и усиливайтесь!</p>
+</div>
+
+<!-- Состав -->
+<div class="section animate-on-scroll" id="team">
+    <h1>Состав</h1>
+    <p>Наша команда — это энтузиасты, создающие идеальный фэнтезийный мир для вас.</p>
+    <div class="team-grid">
+        <!-- Тех админ - MrKeSoR (красный градиент) -->
+        <div class="team-card"
+             data-bs-toggle="popover"
+             data-bs-trigger="hover focus"
+             data-bs-placement="top"
+             data-bs-content="Техническая стабильность, оптимизация, обновления.">
+            <h5 class="tech-admin">MrKeSoR</h5>
+            <p class="tech-admin">Тех. Админ</p>
+        </div>
+
+        <!-- Тех админ - auriny (красный градиент) -->
+        <div class="team-card"
+             data-bs-toggle="popover"
+             data-bs-trigger="hover focus"
+             data-bs-placement="top"
+             data-bs-content="Новые фичи, работоспособность модов и плагинов.">
+            <h5 class="tech-admin">auriny</h5>
+            <p class="tech-admin">Тех. Админ</p>
+        </div>
+
+        <!-- Дизайнер - Ytkov (синий градиент) -->
+        <div class="team-card"
+             data-bs-toggle="popover"
+             data-bs-trigger="hover focus"
+             data-bs-placement="top"
+             data-bs-content="Визуальный стиль, интерфейсы, оформление.">
+            <h5 class="designer">Ytkov</h5>
+            <p class="designer">Дизайнер</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    © 2012-2024 Комплекс игровых серверов Minecraft "McSkill"
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animate-up');
+                }
+            });
+        }, {threshold:0.1});
+        animateElements.forEach(el => observer.observe(el));
+
+        // Инициализация поповеров
+        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    });
+</script>
+
+</body>
+</html>
